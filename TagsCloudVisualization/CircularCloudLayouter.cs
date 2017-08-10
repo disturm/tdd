@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TagsCloudVisualization
 {
-	class CircularCloudLayouter
+    class CircularCloudLayouter
 	{
 		private readonly Point center;
 		private readonly HashSet<Point> points = new HashSet<Point>();
@@ -25,11 +25,16 @@ namespace TagsCloudVisualization
 
 		private Rectangle BuildNextRectangle(Size rectangleSize)
 		{
-			foreach (var point in points.OrderBy(p => p.GetDistanceTo(center)))
-			foreach (var rectangle in GetAdjacentRectangles(point, rectangleSize))
-				if (rectangles.All(r => !r.IsIntersectedWith(rectangle)))
-					return rectangle;
-			return new Rectangle();
+		    var sortedPoints = points
+		        .OrderBy(p => p.Subtract(center).GetLength())
+		        .ThenBy(p => p.Subtract(center).GetAngle())
+                .ToList();
+
+		    foreach (var point in sortedPoints)
+		        foreach (var rectangle in GetAdjacentRectangles(point, rectangleSize))
+		            if (rectangles.All(r => !r.IsIntersectedWith(rectangle)))
+		                return rectangle;
+		    return new Rectangle();
 		}
 
 		private static IEnumerable<Rectangle> GetAdjacentRectangles(Point point, Size size)

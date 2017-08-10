@@ -14,7 +14,7 @@ namespace TagsCloudVisualization
 		[SetUp]
 		public void SetUp()
 		{
-			center = new Point(100, 1000);
+			center = new Point(0, 0);
 			layouter = new CircularCloudLayouter(center);
 		}
 
@@ -107,25 +107,27 @@ namespace TagsCloudVisualization
 			layouter.PutNextRectangle(new Size(10, 10));
 			layouter.PutNextRectangle(new Size(10, 10));
 
-			layouter.PutNextRectangle(new Size(1, 1)).GetPoints()
-				.Should().Contain(new Point(center.X + 10, center.Y));
-			layouter.PutNextRectangle(new Size(1, 1)).GetPoints()
-				.Should().Contain(new Point(center.X + 10, center.Y));
+		    IList<Point> points;
 
-			layouter.PutNextRectangle(new Size(1, 1)).GetPoints()
-				.Should().Contain(new Point(center.X, center.Y - 10));
-			layouter.PutNextRectangle(new Size(1, 1)).GetPoints()
-				.Should().Contain(new Point(center.X, center.Y - 10));
+		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
+		    points.Should().Contain(new Point(center.X + 10, center.Y));
+		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
+			points.Should().Contain(new Point(center.X + 10, center.Y));
 
-			layouter.PutNextRectangle(new Size(1, 1)).GetPoints()
-				.Should().Contain(new Point(center.X - 10, center.Y));
-			layouter.PutNextRectangle(new Size(1, 1)).GetPoints()
-				.Should().Contain(new Point(center.X - 10, center.Y));
+		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
+            points.Should().Contain(new Point(center.X, center.Y + 10));
+		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
+            points.Should().Contain(new Point(center.X, center.Y + 10));
 
-			layouter.PutNextRectangle(new Size(1, 1)).GetPoints()
-				.Should().Contain(new Point(center.X, center.Y - 10));
-			layouter.PutNextRectangle(new Size(1, 1)).GetPoints()
-				.Should().Contain(new Point(center.X, center.Y - 10));
+		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
+			points.Should().Contain(new Point(center.X - 10, center.Y));
+		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
+            points.Should().Contain(new Point(center.X - 10, center.Y));
+
+		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
+			points.Should().Contain(new Point(center.X, center.Y - 10));
+		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
+			points.Should().Contain(new Point(center.X, center.Y - 10));
 		}
 	}
 }

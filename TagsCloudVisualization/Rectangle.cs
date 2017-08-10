@@ -17,7 +17,7 @@
 
 		public override string ToString()
 		{
-			return $"Rectangle {nameof(X)}={X}, {nameof(Y)}={Y}, {nameof(Width)}={Width}, {nameof(Height)}={Height}";
+			return $"{nameof(Rectangle)} {nameof(X)}={X}, {nameof(Y)}={Y}, {nameof(Width)}={Width}, {nameof(Height)}={Height}";
 		}
 	}
 }

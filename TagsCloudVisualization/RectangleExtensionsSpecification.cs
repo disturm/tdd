@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -56,7 +56,7 @@ namespace TagsCloudVisualization
 			.Concat(GetInsideCases())
 			.Concat(GetIntersectionCases());
 
-		//NOTE: после написания реализации под SimpleCases приходится сделать "прыжок веры" - написать много тестов и завершить реализацию
+		//NOTE: РїРѕСЃР»Рµ РЅР°РїРёСЃР°РЅРёСЏ СЂРµР°Р»РёР·Р°С†РёРё РїРѕРґ SimpleCases РїСЂРёС…РѕРґРёС‚СЃСЏ СЃРґРµР»Р°С‚СЊ "РїСЂС‹Р¶РѕРє РІРµСЂС‹" - РЅР°РїРёСЃР°С‚СЊ РјРЅРѕРіРѕ С‚РµСЃС‚РѕРІ Рё Р·Р°РІРµСЂС€РёС‚СЊ СЂРµР°Р»РёР·Р°С†РёСЋ
 		private static IEnumerable<TestCaseData> GetSimpleCases()
 		{
 			yield return new TestCaseData(
