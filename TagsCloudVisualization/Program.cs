@@ -17,8 +17,8 @@ namespace TagsCloudVisualization
 		    var rectangles =
 		        from index in Enumerable.Range(3, 100)
 		        let size = new Size(
-		            3*random.NextDouble()*500.0/index,
-		            3*random.NextDouble()*500.0/index)
+		            (int)(3*random.NextDouble()*500.0/index),
+		            (int)(3*random.NextDouble()*500.0/index))
 		        select layouter.PutNextRectangle(size);
 
 		    var draw = BuildDraw(Color.AliceBlue, Color.DarkOrange, 1000, 1000);

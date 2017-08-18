@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace TagsCloudVisualization
@@ -32,7 +33,7 @@ namespace TagsCloudVisualization
 
 		    foreach (var point in sortedPoints)
 		        foreach (var rectangle in GetAdjacentRectangles(point, rectangleSize))
-		            if (rectangles.All(r => !r.IsIntersectedWith(rectangle)))
+		            if (rectangles.All(r => !r.IntersectsWith(rectangle)))
 		                return rectangle;
 		    return new Rectangle();
 		}

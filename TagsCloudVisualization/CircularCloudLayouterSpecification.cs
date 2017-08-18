@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -67,9 +68,9 @@ namespace TagsCloudVisualization
 			const int count = 100;
 			for (var i = 0; i < count; i++)
 			{
-				var nextRectangle = layouter.PutNextRectangle(new Size(i, i));
+				var nextRectangle = layouter.PutNextRectangle(new Size(i + 1, i + 1));
 				nextRectangle.Should().NotBe(new Rectangle(), $"{i + 1} is less that {count}");
-				rectangles.All(r => !RectangleExtensions.IsIntersectedWith(r, nextRectangle)).Should().BeTrue();
+				rectangles.All(r => !r.IntersectsWith(nextRectangle)).Should().BeTrue();
 
 				rectangles.Add(nextRectangle);
 			}
@@ -129,5 +130,7 @@ namespace TagsCloudVisualization
 		    points = layouter.PutNextRectangle(new Size(1, 1)).GetPoints();
 			points.Should().Contain(new Point(center.X, center.Y - 10));
 		}
+
+        //todo approval test на площадь
 	}
 }

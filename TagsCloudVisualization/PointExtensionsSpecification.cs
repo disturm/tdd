@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -23,8 +24,8 @@ namespace TagsCloudVisualization
         }
 
         [TestCaseSource(nameof(GetAngle_Should_Source))]
-        [DefaultFloatingPointTolerance(0.0001)]
-        public double GetAngle_Should(double x, double y)
+        [DefaultFloatingPointTolerance(0.01)]
+        public double GetAngle_Should(int x, int y)
         {
             return new Point(x, y).GetAngle();
         }
@@ -40,8 +41,8 @@ namespace TagsCloudVisualization
             new TestCaseData(-1, 1).Returns(3*Math.PI/4),
             new TestCaseData(-1, -1).Returns(5*Math.PI/4),
             new TestCaseData(1, -1).Returns(7*Math.PI/4),
-            new TestCaseData(Math.Sqrt(3)/2, 1.0/2).Returns(Math.PI/6),
-            new TestCaseData(1.0/2, Math.Sqrt(3)/2).Returns(Math.PI/3),
+            new TestCaseData((int)(1000*Math.Sqrt(3)/2), (int)(1000*1.0/2)).Returns(Math.PI/6),
+            new TestCaseData((int)(1000*1.0/2), (int)(1000*Math.Sqrt(3)/2)).Returns(Math.PI/3),
         };
     }
 }

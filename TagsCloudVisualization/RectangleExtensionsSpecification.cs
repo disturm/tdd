@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -14,22 +15,14 @@ namespace TagsCloudVisualization
 		[TestCase(3, 1, ExpectedResult = 3, TestName = "Width_WhenHeightIsOne")]
 		[TestCase(1, 3, ExpectedResult = 3, TestName = "Height_WhenWidthIsOne")]
 		[TestCase(2, 3, ExpectedResult = 6, TestName = "MultiplicationOfWidthAndHeight_WhenPositive")]
-		[TestCase(1, double.NaN, ExpectedResult = double.NaN, TestName = "NaN_WhenWidthIsNan")]
-		[TestCase(double.NaN, 1, ExpectedResult = double.NaN, TestName = "NaN_WhenHeightIsNan")]
-		[TestCase(1, double.PositiveInfinity, ExpectedResult = double.PositiveInfinity, TestName = "PositiveInfinity_WhenWidthIsPositiveInfinity")]
-		[TestCase(double.PositiveInfinity, 1, ExpectedResult = double.PositiveInfinity, TestName = "PositiveInfinity_WhenHeightIsPositiveInfinity")]
-		public double GetSquare_ShouldReturn(double width, double height)
+		public double GetSquare_ShouldReturn(int width, int height)
 		{
 			return new Rectangle(0, 0, width, height).GetSquare();
 		}
 
 		[TestCase(-1, 1, TestName = "WhenWidthIsNegative")]
 		[TestCase(1, -1, TestName = "WhenHeightIsNegative")]
-		[TestCase(-1, double.NaN, TestName = "WhenWidthIsNegativeAndHeightIsNaN")]
-		[TestCase(double.NaN, -1, TestName = "WhenHeightIsNegativeAndWidthIsNaN")]
-		[TestCase(-1, double.PositiveInfinity, TestName = "WhenWidthIsNegativeAndHeightIsPositiveInfinity")]
-		[TestCase(double.PositiveInfinity, -1, TestName = "WhenHeightIsNegativeAndWidthIsPositiveInfinity")]
-		public void GetSquare_ShouldThrow(double width, double height)
+		public void GetSquare_ShouldThrow(int width, int height)
 		{
 			Action action = () => new Rectangle(0, 0, width, height).GetSquare();
 			action.ShouldThrow<InvalidOperationException>();
@@ -41,16 +34,17 @@ namespace TagsCloudVisualization
 			return thisRectangle.IntersectWith(thatRectangle);
 		}
 
-		const int left = 1;
-		const int top = 2;
-		const int width = 3;
-		const int height = 4;
-		const int widthBig = 30;
-		const int heightBig = 40;
-		const double epsilon = 0.0001;
-		const double shift = 1;
+		const int left = 10;
+		const int top = 20;
+		const int width = 30;
+		const int height = 40;
+		const int widthBig = 300;
+		const int heightBig = 400;
+		const int epsilon = 1;
+		const int shift = 10;
 
-		private static IEnumerable<TestCaseData> IntersectWith_ShouldBe_Source => GetSimpleCases()
+        //NOTE: на самом деле эти тесты не нужны, т.к. есть встроенная реализация пересечения
+        private static IEnumerable<TestCaseData> IntersectWith_ShouldBe_Source => GetSimpleCases()
 			.Concat(GetHorizontalCases())
 			.Concat(GetVerticalCases())
 			.Concat(GetInsideCases())
@@ -165,7 +159,7 @@ namespace TagsCloudVisualization
 			var second = new Rectangle(left + width / 2, top + height / 2, widthBig, heightBig);
 			first.IntersectWith(second).Should().NotBeNull();
 
-			first.IsIntersectedWith(second).Should().BeTrue();
+			first.IntersectsWith(second).Should().BeTrue();
 		}
 
 		[Test]
@@ -175,7 +169,7 @@ namespace TagsCloudVisualization
 			var second = new Rectangle(left + 2*width, top + 2*height, widthBig, heightBig);
 			first.IntersectWith(second).Should().BeNull();
 
-			first.IsIntersectedWith(second).Should().BeFalse();
+			first.IntersectsWith(second).Should().BeFalse();
 		}
 
 		[Test]
@@ -186,7 +180,7 @@ namespace TagsCloudVisualization
 			first.IntersectWith(second).Should().NotBeNull()
 				.And.Match<Rectangle>(r => Math.Abs(r.Width) < double.Epsilon);
 
-			first.IsIntersectedWith(second).Should().BeFalse();
+			first.IntersectsWith(second).Should().BeFalse();
 		}
 
 		[Test]

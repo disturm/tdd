@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace TagsCloudVisualization
 {
@@ -25,14 +26,6 @@ namespace TagsCloudVisualization
 				return null;
 
 			return new Rectangle(left, top, right - left, bottom - top);
-		}
-
-		public static bool IsIntersectedWith(this Rectangle thisRectangle, Rectangle thatRectangle)
-		{
-			var intersection = thisRectangle.IntersectWith(thatRectangle);
-			return intersection.HasValue
-			       && intersection.Value.Width > 0
-			       && intersection.Value.Height > 0;
 		}
 
 		public static IList<Point> GetPoints(this Rectangle rectangle)
